@@ -96,7 +96,7 @@
   </dependencies>
  
   <build>  
-	<finalName>WebServiceRest</finalName>   
+	<finalName>cadmais</finalName>   
 	<plugins>
 	    <plugin>
 	       <artifactId>maven-compiler-plugin</artifactId>

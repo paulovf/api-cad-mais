@@ -19,7 +19,7 @@ import br.com.api.cadmais.repository.VeiculoRepository;
 import br.com.api.cadmais.repository.entity.FuncionarioEntity;
 import br.com.api.cadmais.repository.entity.VeiculoEntity;
 
-@Path("/service")
+@Path("/api")
 public class ServiceController {
 	private final FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
 	private final VeiculoRepository veiculoRepository = new VeiculoRepository();
