@@ -11,7 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
- 
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import br.com.api.cadmais.http.Funcionario;
 import br.com.api.cadmais.http.Veiculo;
 import br.com.api.cadmais.repository.FuncionarioRepository;
@@ -25,8 +28,8 @@ public class ServiceController {
 	private final VeiculoRepository veiculoRepository = new VeiculoRepository();
  
 	@POST
-	@Consumes("application/json; charset=UTF-8")
-	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=utf-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/cadastrar_funcionario")
 	public String cadastrarFuncionario(Funcionario funcionario){
 		FuncionarioEntity entity = new FuncionarioEntity();
@@ -45,8 +48,8 @@ public class ServiceController {
 	}
 	
 	@POST
-	@Consumes("application/json; charset=UTF-8")
-	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=utf-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/cadastrar_veiculo")
 	public String cadastrarVeiculo(Veiculo veiculo){
 		VeiculoEntity entity = new VeiculoEntity();
@@ -71,8 +74,8 @@ public class ServiceController {
 	}
  
 	@PUT
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")	
+	@Produces("application/json; charset=utf-8")
+	@Consumes("application/json; charset=utf-8")	
 	@Path("/alterar_funcionario")
 	public String alterarFuncionario(Funcionario funcionario){
 		FuncionarioEntity entity = new FuncionarioEntity();
@@ -90,8 +93,8 @@ public class ServiceController {
 	}
 	
 	@PUT
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")	
+	@Produces("application/json; charset=utf-8")
+	@Consumes("application/json; charset=utf-8")	
 	@Path("/alterar_veiculo")
 	public String alterarVeiculo(Veiculo veiculo){
 		VeiculoEntity entity = new VeiculoEntity();
@@ -115,8 +118,9 @@ public class ServiceController {
 	}
 	
 	@GET
-	@Produces("application/json; charset=UTF-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/listar_funcionarios")
+	@CrossOrigin(origins = "*")
 	public List<Funcionario> listarFuncionarios(){
 		List<Funcionario> funcionarios =  new ArrayList<Funcionario>();
 		List<FuncionarioEntity> listaEntityFuncionarios = funcionarioRepository.listar();
@@ -128,7 +132,7 @@ public class ServiceController {
 	}
 	
 	@GET
-	@Produces("application/json; charset=UTF-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/listar_veiculos")
 	public List<Veiculo> listarVeiculos(){
 		List<Veiculo> veiculos = new ArrayList<Veiculo>();
@@ -143,7 +147,7 @@ public class ServiceController {
 	}
  
 	@GET
-	@Produces("application/json; charset=UTF-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/get_funcionario/{id_funcionario}")
 	public Funcionario getFuncionario(@PathParam("id_funcionario") Integer idFuncionario){
 		FuncionarioEntity entity = funcionarioRepository.getFuncionario(idFuncionario);
@@ -154,7 +158,7 @@ public class ServiceController {
 	}
 	
 	@GET
-	@Produces("application/json; charset=UTF-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/get_veiculo/{id_veiculo}")
 	public Veiculo getVeiculo(@PathParam("id_veiculo") Integer idVeiculo){
 		VeiculoEntity entity = veiculoRepository.getVeiculo(idVeiculo);
@@ -167,7 +171,7 @@ public class ServiceController {
 	}
  
 	@DELETE
-	@Produces("application/json; charset=UTF-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/excluir_funcionario/{id_funcionario}")	
 	public String excluirFuncionario(@PathParam("id_funcionario") Integer idFuncionario){
 		try {
@@ -179,7 +183,7 @@ public class ServiceController {
 	}
  
 	@DELETE
-	@Produces("application/json; charset=UTF-8")
+	@Produces("application/json; charset=utf-8")
 	@Path("/excluir_veiculo/{id_veiculo}")	
 	public String excluirVeiculo(@PathParam("id_veiculo") Integer idVeiculo){
 		try {
