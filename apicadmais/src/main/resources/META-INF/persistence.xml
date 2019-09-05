@@ -10,7 +10,7 @@
       <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
          <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://10.0.0.250:3306/cadmais"/>
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cadmais"/>
          <property name="javax.persistence.jdbc.user" value="cadmais"/>
          <property name="javax.persistence.jdbc.password" value="cadmais"/>
          <property name="hibernate.show_sql" value="true"/>

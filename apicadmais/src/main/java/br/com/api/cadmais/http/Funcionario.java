@@ -1,7 +1,5 @@
 package br.com.api.cadmais.http;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlRootElement;
  
 @XmlRootElement
@@ -9,13 +7,13 @@ public class Funcionario {
 	private int idFuncionario;
 	private String nome;
 	private String cpf;	
-	private Date dataNascimento;
+	private String dataNascimento;
 	private String login;
 	private String senha;
  
 	public Funcionario(){}
 
-	public Funcionario(int idFuncionario, String nome, String cpf, Date dataNascimento, String login, String senha) {
+	public Funcionario(int idFuncionario, String nome, String cpf, String dataNascimento, String login, String senha) {
 		super();
 		this.idFuncionario = idFuncionario;
 		this.nome = nome;
@@ -49,11 +47,11 @@ public class Funcionario {
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

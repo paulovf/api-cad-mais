@@ -1,7 +1,5 @@
 package br.com.api.cadmais.http;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlRootElement;
  
 @XmlRootElement
@@ -12,8 +10,8 @@ public class Veiculo {
 	private String anoFabricacao;
 	private String anoModelo;
 	private String chassi;
-	private Date dataCadastro;	
-	private Date dataDesativacao;
+	private String dataCadastro;	
+	private String dataDesativacao;
 	private String modelo;
 	private String cor;
 	private double consumoMedioKm;
@@ -22,7 +20,7 @@ public class Veiculo {
 	public Veiculo(){}
 
 	public Veiculo(int idVeiculo, String placa, String ativo, String anoFabricacao, String anoModelo, String chassi,
-			Date dataCadastro, Date dataDesativacao, String modelo, String cor, double consumoMedioKm,
+			String dataCadastro, String dataDesativacao, String modelo, String cor, double consumoMedioKm,
 			int quantidadePassageiros) {
 		super();
 		this.idVeiculo = idVeiculo;
@@ -87,19 +85,19 @@ public class Veiculo {
 		this.chassi = chassi;
 	}
 
-	public Date getDataCadastro() {
+	public String getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(String dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Date getDataDesativacao() {
+	public String getDataDesativacao() {
 		return dataDesativacao;
 	}
 
-	public void setDataDesativacao(Date dataDesativacao) {
+	public void setDataDesativacao(String dataDesativacao) {
 		this.dataDesativacao = dataDesativacao;
 	}
 

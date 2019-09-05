@@ -1,5 +1,7 @@
 package br.com.api.cadmais.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -13,7 +15,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.api.cadmais.http.Funcionario;
 import br.com.api.cadmais.http.Veiculo;
@@ -23,6 +24,7 @@ import br.com.api.cadmais.repository.entity.FuncionarioEntity;
 import br.com.api.cadmais.repository.entity.VeiculoEntity;
 
 @Path("/api")
+@CrossOrigin("*")
 public class ServiceController {
 	private final FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
 	private final VeiculoRepository veiculoRepository = new VeiculoRepository();
@@ -36,7 +38,9 @@ public class ServiceController {
 		try {
 			entity.setCpf(funcionario.getCpf());
 			entity.setNome(funcionario.getNome());
-			entity.setDataNascimento(funcionario.getDataNascimento());
+			//entity.setDataNascimento(funcionario.getDataNascimento());
+			entity.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(
+					funcionario.getDataNascimento()));
 			entity.setLogin(funcionario.getLogin());
 			entity.setSenha(funcionario.getSenha());
  
@@ -59,8 +63,10 @@ public class ServiceController {
 			entity.setAnoFabricacao(veiculo.getAnoFabricacao());
 			entity.setAnoModelo(veiculo.getAnoModelo());
 			entity.setChassi(veiculo.getChassi());
-			entity.setDataCadastro(veiculo.getDataCadastro());
-			entity.setDataDesativacao(veiculo.getDataDesativacao());
+			entity.setDataCadastro(new SimpleDateFormat("dd/MM/yyyy").parse(
+					veiculo.getDataCadastro()));
+			entity.setDataDesativacao(new SimpleDateFormat("dd/MM/yyyy").parse(
+					veiculo.getDataDesativacao()));
 			entity.setModelo(veiculo.getModelo());
 			entity.setCor(veiculo.getCor());
 			entity.setConsumoMedioKm(veiculo.getConsumoMedioKm());
@@ -80,9 +86,12 @@ public class ServiceController {
 	public String alterarFuncionario(Funcionario funcionario){
 		FuncionarioEntity entity = new FuncionarioEntity();
 		try {
+			entity.setIdFuncionario(funcionario.getIdFuncionario());
 			entity.setCpf(funcionario.getCpf());
 			entity.setNome(funcionario.getNome());
-			entity.setDataNascimento(funcionario.getDataNascimento());
+			//entity.setDataNascimento(funcionario.getDataNascimento());
+			entity.setDataNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(
+					funcionario.getDataNascimento()));
 			entity.setLogin(funcionario.getLogin());
 			entity.setSenha(funcionario.getSenha());
 			funcionarioRepository.alterar(entity);
@@ -104,8 +113,10 @@ public class ServiceController {
 			entity.setAnoFabricacao(veiculo.getAnoFabricacao());
 			entity.setAnoModelo(veiculo.getAnoModelo());
 			entity.setChassi(veiculo.getChassi());
-			entity.setDataCadastro(veiculo.getDataCadastro());
-			entity.setDataDesativacao(veiculo.getDataDesativacao());
+			entity.setDataCadastro(new SimpleDateFormat("dd/MM/yyyy").parse(
+					veiculo.getDataCadastro()));
+			entity.setDataDesativacao(new SimpleDateFormat("dd/MM/yyyy").parse(
+					veiculo.getDataDesativacao()));
 			entity.setModelo(veiculo.getModelo());
 			entity.setCor(veiculo.getCor());
 			entity.setConsumoMedioKm(veiculo.getConsumoMedioKm());
@@ -120,13 +131,19 @@ public class ServiceController {
 	@GET
 	@Produces("application/json; charset=utf-8")
 	@Path("/listar_funcionarios")
-	@CrossOrigin(origins = "*")
 	public List<Funcionario> listarFuncionarios(){
 		List<Funcionario> funcionarios =  new ArrayList<Funcionario>();
 		List<FuncionarioEntity> listaEntityFuncionarios = funcionarioRepository.listar();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		for (FuncionarioEntity entity : listaEntityFuncionarios) {
-			funcionarios.add(new Funcionario(entity.getIdFuncionario(), entity.getNome(),
-					entity.getCpf(), entity.getDataNascimento(), entity.getLogin(), entity.getSenha()));
+			try {
+				funcionarios.add(new Funcionario(entity.getIdFuncionario(), entity.getNome(),
+					entity.getCpf(), dateFormat.format(entity.getDataNascimento()), 
+					entity.getLogin(), entity.getSenha()));
+			}catch(Exception e) {
+				funcionarios.add(new Funcionario(entity.getIdFuncionario(), entity.getNome(),
+					entity.getCpf(), null, entity.getLogin(), entity.getSenha()));
+			}
 		}
 		return funcionarios;
 	}
@@ -137,11 +154,20 @@ public class ServiceController {
 	public List<Veiculo> listarVeiculos(){
 		List<Veiculo> veiculos = new ArrayList<Veiculo>();
 		List<VeiculoEntity> listaEntityVeiculos = veiculoRepository.listar();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		for (VeiculoEntity entity : listaEntityVeiculos) {
-			veiculos.add(new Veiculo(entity.getIdVeiculo(), entity.getPlaca(), entity.getAtivo(),
+			try {
+				veiculos.add(new Veiculo(entity.getIdVeiculo(), entity.getPlaca(), entity.getAtivo(),
 					entity.getAnoFabricacao(), entity.getAnoModelo(), entity.getChassi(), 
-					entity.getDataCadastro(), entity.getDataDesativacao(), entity.getModelo(),
+					dateFormat.format(entity.getDataCadastro()), 
+					dateFormat.format(entity.getDataDesativacao()), entity.getModelo(),
 					entity.getCor(), entity.getConsumoMedioKm(), entity.getQuantidadePassageiros()));
+			}catch(Exception e) {
+				veiculos.add(new Veiculo(entity.getIdVeiculo(), entity.getPlaca(), entity.getAtivo(),
+						entity.getAnoFabricacao(), entity.getAnoModelo(), entity.getChassi(), 
+						null, null, entity.getModelo(), entity.getCor(), entity.getConsumoMedioKm(), 
+						entity.getQuantidadePassageiros()));
+			}
 		}
 		return veiculos;
 	}
@@ -151,9 +177,18 @@ public class ServiceController {
 	@Path("/get_funcionario/{id_funcionario}")
 	public Funcionario getFuncionario(@PathParam("id_funcionario") Integer idFuncionario){
 		FuncionarioEntity entity = funcionarioRepository.getFuncionario(idFuncionario);
-		if(entity != null)
-			return new Funcionario(entity.getIdFuncionario(), entity.getNome(),
-					entity.getCpf(), entity.getDataNascimento(), entity.getLogin(), entity.getSenha());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		if(entity != null) {
+			try {
+				return new Funcionario(entity.getIdFuncionario(), entity.getNome(),
+					entity.getCpf(), dateFormat.format(entity.getDataNascimento()), 
+					entity.getLogin(), entity.getSenha());
+			}catch(Exception e) {
+				return new Funcionario(entity.getIdFuncionario(), entity.getNome(),
+						entity.getCpf(), null, 
+						entity.getLogin(), entity.getSenha());
+			}
+		}
 		return null;
 	}
 	
@@ -162,11 +197,21 @@ public class ServiceController {
 	@Path("/get_veiculo/{id_veiculo}")
 	public Veiculo getVeiculo(@PathParam("id_veiculo") Integer idVeiculo){
 		VeiculoEntity entity = veiculoRepository.getVeiculo(idVeiculo);
-		if(entity != null)
-			return new Veiculo(entity.getIdVeiculo(), entity.getPlaca(), entity.getAtivo(),
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		if(entity != null) {
+			try {
+				return new Veiculo(entity.getIdVeiculo(), entity.getPlaca(), entity.getAtivo(),
 					entity.getAnoFabricacao(), entity.getAnoModelo(), entity.getChassi(), 
-					entity.getDataCadastro(), entity.getDataDesativacao(), entity.getModelo(),
+					dateFormat.format(entity.getDataCadastro()), 
+					dateFormat.format(entity.getDataDesativacao()), entity.getModelo(),
 					entity.getCor(), entity.getConsumoMedioKm(), entity.getQuantidadePassageiros());
+			}catch(Exception e) {
+				return new Veiculo(entity.getIdVeiculo(), entity.getPlaca(), entity.getAtivo(),
+						entity.getAnoFabricacao(), entity.getAnoModelo(), entity.getChassi(), 
+						null, null, entity.getModelo(),
+						entity.getCor(), entity.getConsumoMedioKm(), entity.getQuantidadePassageiros());
+			}
+		}
 		return null;
 	}
  
