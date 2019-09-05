@@ -37,13 +37,6 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   KEY `id_funcionario` (`id_funcionario`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Extraindo dados da tabela `funcionario`
---
-
-INSERT INTO `funcionario` (`id_funcionario`, `nome`, `cpf`, `data_nascimento`, `login`, `senha`) VALUES
-(1, 'José Trajano', '123.456.789-01', '1975-09-18', 'trajano', '123'),
-(2, 'Ulisses Costa', '987.654.321-98', '1975-09-18', 'ulisses', '123');
 
 -- --------------------------------------------------------
 
